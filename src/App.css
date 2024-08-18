@@ -1,0 +1,17 @@
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.thread {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(192, 246, 228);
+  width: 50vw;
+  border: solid;
+  border-color: rgb(100, 161, 140);
+}
