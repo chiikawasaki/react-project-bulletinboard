@@ -1,32 +1,15 @@
-import { useEffect, useState } from "react";
 import "./App.css";
-
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import New from "./threads/new";
+import Home from "./home";
 function App() {
-  const [boarddata, setboarddata] = useState([]);
-
-  async function fetchData() {
-    const data = await fetch(
-      "https://railway.bulletinboard.techtrain.dev/threads"
-    );
-
-    const datajson = await data.json();
-    setboarddata(datajson);
-    console.log(datajson);
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   return (
-    <div className="main">
-      <h1>新着スレッド一覧</h1>
-      {boarddata.map((oneboarddata) => (
-        <div className="thread">
-          <p key={oneboarddata.id}>{oneboarddata.title}</p>
-        </div>
-      ))}
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path={`/`} element={<Home />} />
+        <Route path={`/threads/new`} element={<New />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
