@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 type BoardItem = {
   id: string;
@@ -44,9 +44,15 @@ function Home() {
     <div className="main">
       <h1>新着スレッド一覧</h1>
       {boarddata.map((oneboarddata) => (
-        <div className="thread" key={oneboarddata.id}>
-          <p>{oneboarddata.title}</p>
-        </div>
+        <Link
+          to={`/threads/${oneboarddata.id}`}
+          key={oneboarddata.id}
+          state={oneboarddata.id}
+        >
+          <div className="thread">
+            <p>{oneboarddata.title}</p>
+          </div>
+        </Link>
       ))}
       <Link to={"/threads/new/"}>
         <button>スレッドを作成</button>
