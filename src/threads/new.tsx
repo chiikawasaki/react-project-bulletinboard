@@ -1,10 +1,21 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-type NewProps = {};
-const New: React.FC<NewProps> = () => {
+const New = () => {
   // スレッド名を一時的に保存
   const [text, setText] = useState("");
+  const navigate = useNavigate();
+
+  const onClickAdd = () => {
+    if (text === "") return;
+    const newThread = {
+      id: Date.now().toString(),
+      title: text,
+    };
+
+    navigate("/", { state: { newThread } });
+  };
+
   return (
     <div className="main">
       <h1>スレッド新規作成</h1>
@@ -13,7 +24,7 @@ const New: React.FC<NewProps> = () => {
         onChange={(event) => setText(event.target.value)}
       ></input>
       <Link to={"/"}>Topに戻る</Link>
-      <button onClick={onClickadd}>作成</button>
+      <button onClick={onClickAdd}>作成</button>
     </div>
   );
 };
