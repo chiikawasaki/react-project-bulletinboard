@@ -37,7 +37,6 @@ const ThreadContent = () => {
 
   return (
     <>
-      <div>ThreadId</div>
       {threadPosts.posts.map((thread, index) => (
         <p key={index}>{thread.post}</p>
       ))}
