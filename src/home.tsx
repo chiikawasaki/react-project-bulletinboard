@@ -36,7 +36,7 @@ function Home() {
         return updatedData;
       });
     } else {
-      console.log("なんかむりだった");
+      console.log("むりだった");
     }
   }, [state]);
 
