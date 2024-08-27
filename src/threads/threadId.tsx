@@ -15,6 +15,7 @@ const ThreadContent = () => {
   const { state } = useLocation();
   console.log("Received state:", state); // ここでstateの内容を確認
   const threadId = state.threadId;
+  const threadTitle = state.threadTitle;
   console.log("Received threadId:", threadId);
 
   //スレッド内の投稿を保持するリスト
@@ -41,6 +42,7 @@ const ThreadContent = () => {
 
   return (
     <>
+      <h1>{threadTitle}</h1>
       {threadPosts.posts.map((thread, index) => (
         <p key={index}>{thread.post}</p>
       ))}
