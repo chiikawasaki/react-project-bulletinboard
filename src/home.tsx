@@ -36,7 +36,7 @@ function Home() {
         return updatedData;
       });
     } else {
-      console.log("むりだった");
+      console.log("新規で作成したスレッドがないです");
     }
   }, [state]);
 
