@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { Link, useLocation } from "react-router-dom";
+import CreatethreadButton from "./CreatethreadButton";
 
 type BoardItem = {
   id: string;
@@ -54,9 +55,7 @@ function Home() {
           </div>
         </Link>
       ))}
-      <Link to={"/threads/new/"}>
-        <button>スレッドを作成</button>
-      </Link>
+      <CreatethreadButton />
     </div>
   );
 }
