@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import CreatethreadButton from "../CreatethreadButton";
 
 type PostItem = {
   id: string;
@@ -46,6 +47,7 @@ const ThreadContent = () => {
       {threadPosts.posts.map((thread, index) => (
         <p key={index}>{thread.post}</p>
       ))}
+      <CreatethreadButton />
     </>
   );
 };
