@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 type BoardItem = {
   id: string;
@@ -8,13 +8,8 @@ type BoardItem = {
 };
 
 function Home() {
-  const navigate = useNavigate();
   const { state } = useLocation();
   console.log("Received state:", state); // stateの内容を確認
-
-  // const toThread = (threadId: string, threadTitle: string) => {
-  //   navigate(`/threads/${threadId}`, { state: { threadId, threadTitle } });
-  // };
 
   //   スレッド一覧を保存するリスト
   const [boarddata, setboarddata] = useState<BoardItem[]>([]);
@@ -50,7 +45,6 @@ function Home() {
       <h1>新着スレッド一覧</h1>
       {boarddata.map((oneboarddata) => (
         <Link
-          // onClick={() => toThread(oneboarddata.id, oneboarddata.title)}
           to={`/threads/${oneboarddata.id}`}
           key={oneboarddata.id}
           state={{ threadId: oneboarddata.id, threadTitle: oneboarddata.title }}
