@@ -13,13 +13,17 @@ type ThreadPosts = {
 
 const ThreadContent = () => {
   const { state } = useLocation();
+  console.log("Received state:", state); // ここでstateの内容を確認
+  const threadId = state.threadId;
+  console.log("Received threadId:", threadId);
+
   //スレッド内の投稿を保持するリスト
   const [threadPosts, setThreadPosts] = useState<ThreadPosts>();
 
   useEffect(() => {
     async function fetchData() {
       const data = await fetch(
-        `https://railway.bulletinboard.techtrain.dev/threads/${state}/posts`
+        `https://railway.bulletinboard.techtrain.dev/threads/${threadId}/posts`
       );
 
       const datajson = await data.json();
@@ -28,7 +32,7 @@ const ThreadContent = () => {
     }
 
     fetchData();
-  }, []);
+  }, [state]);
 
   //空だったらloading画面
   if (!threadPosts) {
