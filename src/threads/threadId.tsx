@@ -16,32 +16,29 @@ type ThreadPosts = {
 const ThreadContent = () => {
   //新規Postの内容を持っておく
   const [NewPost, SetNewPost] = useState("");
-  const { state } = useLocation();
-  console.log("Received state:", state); // ここでstateの内容を確認
-  const threadId = state.threadId;
-  const threadTitle = state.threadTitle;
-  console.log("Received threadId:", threadId);
 
   //スレッド内の投稿を保持するリスト
   const [threadPosts, setThreadPosts] = useState<ThreadPosts>();
 
+  const { state } = useLocation();
+  const threadId = state.threadId;
+  const threadTitle = state.threadTitle;
+  const endpointURL = `https://railway.bulletinboard.techtrain.dev/threads/${threadId}/posts`;
+
   //postのデータを取得
-  async function fetchData() {
-    await fetch(
-      `https://railway.bulletinboard.techtrain.dev/threads/${threadId}/posts`
-    )
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setThreadPosts(data);
-      });
-  }
+  const fetchPostData = async () => {
+    try {
+      const response = await axios.get(endpointURL);
+      setThreadPosts(response.data); // APIからのレスポンスデータをステートに保存
+      console.log(response.data); // レスポンスのデータをコンソールに出力
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   //データフェッチング
   useEffect(() => {
-    fetchData();
+    fetchPostData();
   }, []);
 
   //PostをPOSTする関数
@@ -55,7 +52,7 @@ const ThreadContent = () => {
       );
       console.log("responseData:", response.data);
       alert("ポストを投稿しました");
-      fetchData();
+      fetchPostData();
       SetNewPost("");
     } catch (error) {
       console.error("Error posting data", error);

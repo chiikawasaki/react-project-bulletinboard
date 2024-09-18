@@ -2,30 +2,32 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
 import CreatethreadButton from "./CreatethreadButton";
+import axios from "axios";
 
 type BoardItem = {
   id: string;
   title: string;
 };
 
+const endpointURL = "https://railway.bulletinboard.techtrain.dev/threads";
+
 function Home() {
   //   スレッド一覧を保存するリスト
   const [boarddata, setboarddata] = useState<BoardItem[]>([]);
 
-  async function fetchData() {
-    await fetch("https://railway.bulletinboard.techtrain.dev/threads")
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        console.log(data);
-        setboarddata(data);
-      });
+  async function fetchThreadsData() {
+    try {
+      const response = await axios.get(endpointURL);
+      setboarddata(response.data); // APIからのレスポンスデータをステートに保存
+      console.log(response.data); // レスポンスのデータをコンソールに出力
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   }
 
   //データフェッチング
   useEffect(() => {
-    fetchData();
+    fetchThreadsData();
   }, []);
 
   return (
