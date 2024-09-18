@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import { Link } from "react-router-dom";
-import CreatethreadButton from "./CreatethreadButton";
 import axios from "axios";
+import Navbar from "./navbar";
 
 type BoardItem = {
   id: string;
@@ -31,21 +31,26 @@ function Home() {
   }, []);
 
   return (
-    <div className="main">
-      <CreatethreadButton />
-      <h1>新着スレッド一覧</h1>
-      {boarddata.map((oneboarddata) => (
-        <Link
-          to={`/threads/${oneboarddata.id}`}
-          state={{ threadId: oneboarddata.id, threadTitle: oneboarddata.title }}
-          key={oneboarddata.id}
-        >
-          <div className="thread">
-            <p>{oneboarddata.title}</p>
-          </div>
-        </Link>
-      ))}
-    </div>
+    <>
+      <Navbar />
+      <div className="main">
+        <h1 className="text-3xl font-bold mb-5">新着スレッド一覧</h1>
+        {boarddata.map((oneboarddata) => (
+          <Link
+            to={`/threads/${oneboarddata.id}`}
+            state={{
+              threadId: oneboarddata.id,
+              threadTitle: oneboarddata.title,
+            }}
+            key={oneboarddata.id}
+          >
+            <div className="thread">
+              <p className="mt-3 mb-3 text-grey-700">{oneboarddata.title}</p>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </>
   );
 }
 
