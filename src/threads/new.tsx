@@ -1,19 +1,31 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const New = () => {
+  const navigate = useNavigate();
   // スレッド名を一時的に保存
   const [text, setText] = useState("");
-  const navigate = useNavigate();
 
-  const onClickAdd = () => {
-    if (text === "") return;
-    const newThread = {
-      id: Date.now().toString(),
-      title: text,
-    };
+  //postする関数
+  const postData = async () => {
+    try {
+      const response = await axios.post(
+        `https://railway.bulletinboard.techtrain.dev/threads`,
+        {
+          title: text,
+        }
+      );
+      console.log("responseData:", response.data);
+      navigate("/");
+    } catch (error) {
+      console.error("Error posting data", error);
+    }
+  };
 
-    navigate("/", { state: { newThread } });
+  const handleSubmit = (event: FormEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    postData();
   };
 
   return (
@@ -24,7 +36,7 @@ const New = () => {
         onChange={(event) => setText(event.target.value)}
       ></input>
       <Link to={"/"}>Topに戻る</Link>
-      <button onClick={onClickAdd}>作成</button>
+      <button onClick={(e) => handleSubmit(e)}>作成</button>
     </div>
   );
 };
