@@ -51,7 +51,6 @@ const ThreadContent = () => {
         }
       );
       console.log("responseData:", response.data);
-      alert("ポストを投稿しました");
       fetchPostData();
       SetNewPost("");
     } catch (error) {
