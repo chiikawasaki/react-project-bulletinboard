@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import CreatethreadButton from "../CreatethreadButton";
 import axios from "axios";
+import Navbar from "../navbar";
 
 type PostItem = {
   id: string;
@@ -67,28 +67,45 @@ const ThreadContent = () => {
 
   return (
     <>
-      <CreatethreadButton />
-      <h1>{threadTitle}</h1>
-      {threadPosts?.posts.map((thread, index) => (
-        <p key={index}>{thread.post}</p>
-      ))}
-
-      <p>ポストを投稿</p>
-      <input
-        value={NewPost}
-        onChange={(event) => {
-          SetNewPost(event.target.value);
-        }}
-      ></input>
-      <button
-        onClick={(e) => {
-          handleSubmit(e);
-        }}
-      >
-        投稿する
-      </button>
-
-      <Link to={"/"}>Topに戻る</Link>
+      <Navbar />
+      <div className="flex justify-evenly">
+        <div>
+          <h1 className="text-3xl font-bold mb-5 ml-10">{threadTitle}</h1>
+          {threadPosts?.posts.map((thread, index) => (
+            <p
+              className="grid h-20 place-content-center rounded shadow-md m-10 p-5"
+              key={index}
+            >
+              {thread.post}
+            </p>
+          ))}
+        </div>
+        <div className="flex justify-center flex-col items-center w-50">
+          <p>ポストを投稿</p>
+          <input
+            type="text"
+            placeholder="投稿してみよう！"
+            className="input input-bordered w-full max-w-xs"
+            value={NewPost}
+            onChange={(event) => {
+              SetNewPost(event.target.value);
+            }}
+          ></input>
+          <button
+            className="btn btn-accent self-center mt-3"
+            onClick={(e) => {
+              handleSubmit(e);
+            }}
+          >
+            投稿する
+          </button>
+          <Link to={"/"}>
+            <button className="btn btn-active btn-link self-center">
+              Topに戻る
+            </button>
+          </Link>
+        </div>
+      </div>
     </>
   );
 };

@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Navbar from "../navbar";
 
 const New = () => {
   const navigate = useNavigate();
@@ -29,15 +30,28 @@ const New = () => {
   };
 
   return (
-    <div className="main">
-      <h1>スレッド新規作成</h1>
-      <input
-        value={text}
-        onChange={(event) => setText(event.target.value)}
-      ></input>
-      <Link to={"/"}>Topに戻る</Link>
-      <button onClick={(e) => handleSubmit(e)}>作成</button>
-    </div>
+    <>
+      <Navbar />
+      <div className="main">
+        <h1>スレッド新規作成</h1>
+        <input
+          className="input input-bordered w-full max-w-xs"
+          type="text"
+          placeholder="投稿してみよう！"
+          value={text}
+          onChange={(event) => setText(event.target.value)}
+        ></input>
+        <button
+          className="btn btn-accent mt-3"
+          onClick={(e) => handleSubmit(e)}
+        >
+          作成
+        </button>
+        <Link to={"/"} className="btn btn-active btn-link self-center">
+          Topに戻る
+        </Link>
+      </div>
+    </>
   );
 };
 
