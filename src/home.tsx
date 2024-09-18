@@ -15,47 +15,35 @@ function Home() {
   //   スレッド一覧を保存するリスト
   const [boarddata, setboarddata] = useState<BoardItem[]>([]);
 
+  async function fetchData() {
+    const endpointURL = await fetch(
+      "https://railway.bulletinboard.techtrain.dev/threads"
+    )
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setboarddata(data);
+      });
+  }
+
+  //データフェッチング
   useEffect(() => {
-    async function fetchData() {
-      const data = await fetch(
-        "https://railway.bulletinboard.techtrain.dev/threads"
-      );
-
-      const datajson = await data.json();
-      setboarddata(datajson);
-      console.log(datajson);
-    }
-
     fetchData();
   }, []);
 
-  useEffect(() => {
-    if (state && state.newThread) {
-      setboarddata((prevdata) => {
-        const updatedData = [...prevdata, state.newThread];
-        console.log("Updated data:", updatedData);
-        return updatedData;
-      });
-    } else {
-      console.log("新規で作成したスレッドがないです");
-    }
-  }, [state]);
-
   return (
     <div className="main">
+      <CreatethreadButton />
       <h1>新着スレッド一覧</h1>
       {boarddata.map((oneboarddata) => (
-        <Link
-          to={`/threads/${oneboarddata.id}`}
-          key={oneboarddata.id}
-          state={{ threadId: oneboarddata.id, threadTitle: oneboarddata.title }}
-        >
+        <Link to={`/threads/${oneboarddata.id}`} key={oneboarddata.id}>
           <div className="thread">
             <p>{oneboarddata.title}</p>
           </div>
         </Link>
       ))}
-      <CreatethreadButton />
     </div>
   );
 }
